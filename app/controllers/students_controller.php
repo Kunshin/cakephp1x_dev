@@ -21,7 +21,7 @@ class StudentsController extends AppController {
 
 		$data = $this->UsersGroup->find("all", array(
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
@@ -48,7 +48,7 @@ class StudentsController extends AppController {
 
 	}
 
-    public function load_add() {
+    public function loadAdd() {
 
     	$dataUser = $this->Auth->User();
 
@@ -85,6 +85,7 @@ class StudentsController extends AppController {
                     $student_id = $this->Student->getLastInsertId();
 
                     $this->data['UsersGroup']['user_id'] = $student_id;
+
                     $this->data['UsersGroup']['group_id'] = $this->data['role'];
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
@@ -92,8 +93,6 @@ class StudentsController extends AppController {
                     return $this->redirect('/Students');
 
                 } else {
-
-                    var_dump($this->Student);
 
                     $this->Session->setFlash('<h3>Save Error !</h3>');
 
@@ -121,7 +120,7 @@ class StudentsController extends AppController {
 
 		$data = $this->UsersGroup->find("all", array(
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
@@ -133,11 +132,11 @@ class StudentsController extends AppController {
 		
 		$data = $this->Student->find("all", array(
 
-          	'conditions' => array('id' => $id )
+          	'conditions' => array('id' => $id)
 
      	));
 
-     	$this->set("data", $data);
+     	$this->set("data", $data[0]['Student']);
 
      	$this->Student->set($this->data);
 
@@ -183,7 +182,7 @@ class StudentsController extends AppController {
 
 		$data = $this->UsersGroup->find("all", array(
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
@@ -209,7 +208,7 @@ class StudentsController extends AppController {
 
 		$data = $this->Student->find("all", array(
 
-          	'conditions' => array('id' => $id )
+          	'conditions' => array('id' => $id)
 
         ));
 

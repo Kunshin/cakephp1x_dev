@@ -5,9 +5,11 @@ class StudentsController extends AppController {
 
   	public $helpers = array('Html','Form');
   	
-  	public $components = array('Auth');
+  	public $components = array('Auth','Session');
 
   	public function beforeFilter() {
+
+        $this->layout = 'students';
 
         parent::beforeFilter();
         
@@ -23,6 +25,8 @@ class StudentsController extends AppController {
 
      	));
 
+        $this->set('dataUser', $data);
+
      	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 3) {
 
             return $this->redirect('/users/login');
@@ -36,7 +40,7 @@ class StudentsController extends AppController {
 
       	$data = $this->Student->find("all", array(
 
-          	'conditions' => array('is_deleted' => 0 )
+          	'conditions' => array('is_deleted' => 0)
 
      	));
 
@@ -52,7 +56,7 @@ class StudentsController extends AppController {
 
 		$data = $this->UsersGroup->find("all", array(
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
@@ -66,25 +70,40 @@ class StudentsController extends AppController {
 
 	    if ($this->data) {
 
+            if ($this->data['password'] && $this->data['password_confirm']) {
+
+                $this->data['password'] = $this->Auth->password($this->data['password']);
+
+                $this->data['password_confirm'] = $this->Auth->password($this->data['password_confirm']);
+
+            }
+
 	      	if ($this->Student->validates()) {
 
-	      		if ($this->Student->save($this->data)) {
+                if ($this->Student->save($this->data)) {
 
-				   $this->Session->setFlash('Recipe Saved!');
+                    $student_id = $this->Student->getLastInsertId();
 
-	            	return $this->redirect('/Students');
+                    $this->data['UsersGroup']['user_id'] = $student_id;
+                    $this->data['UsersGroup']['group_id'] = $this->data['role'];
 
-				} else {
+                    $this->UsersGroup->save($this->data['UsersGroup']);
 
-		        	$this->Session->setFlash('Error');
+                    return $this->redirect('/Students');
 
-				}
+                } else {
+
+                    var_dump($this->Student);
+
+                    $this->Session->setFlash('<h3>Save Error !</h3>');
+
+                }
 
 		    } else {
 
 		    	$errors = $this->Student->invalidFields();
 
-		        $this->Session->setFlash('Error');
+		        $this->Session->setFlash('<h3> Error !</h3>');
 
 				$this->set("errors", $errors);
 
@@ -126,17 +145,21 @@ class StudentsController extends AppController {
 
 	      	if ($this->Student->validates()) {
 
-	        	if ($this->Student->save($this->data)) {
+                if ($dataUser) {
 
-		            $this->Session->setFlash('Recipe Saved!');
+                    if ($this->Student->save($this->data)) {
 
-		            return $this->redirect('/Students');
+                        $this->Session->setFlash('Recipe Saved!');
 
-		        } else {
+                        return $this->redirect('/Students');
 
-		        	$this->Session->setFlash('Error Saved !');
+                    } else {
 
-		        }
+                        $this->Session->setFlash('Error Saved !');
+
+                    }
+
+                }
 
 		    } else {
 
@@ -170,13 +193,15 @@ class StudentsController extends AppController {
 
         }
 
-		$this->Student->id = $id;
-		
-		$this->Student->saveField('is_deleted', 1);
+        if ($dataUser) {
 
-		$this->Session->setFlash("Delete Completed !!!");
+            $this->Student->saveField('is_deleted', 1);
 
-		return $this->redirect('/Students');
+            $this->Session->setFlash("Delete Completed !!!");
+
+            return $this->redirect('/Students');
+
+        }
 
 	}
 

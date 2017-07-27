@@ -5,24 +5,52 @@ class UsersController extends AppController {
 
 	var $helpers = array("Html","Session");
 
-	var $components = array("Auth");
+	var $components = array("Auth", "Session");
 
 	public function beforeFilter() {
 
 		parent::beforeFilter();
+
+		$dataUser = $this->Auth->User();
+
+		$this->set('dataUser', $dataUser);
+
+		$this->Auth->autoRedirect = false;
 
 	}
 
 
 	public function login() {
 
-		if ($this->Auth->login()) {
+		if ($this->data) {
 
-			$this->redirect("/students/");
+			if ($this->Auth->login()) {
 
-		} else {
+				$dataUser = $this->Auth->User();
 
-			$this->Session->setFlash('Username hoặc password sai','default',array('class'=>"alert alert-success"));
+				$this->loadModel('UsersGroup');
+
+				$data = $this->UsersGroup->find("all", array(
+
+		          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+
+		     	));
+
+		     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 3) {
+
+		            $this->Session->setFlash('Login Success - You are General User !');
+
+		        } else {
+
+		        	$this->redirect('/students');
+
+		        }
+
+			} else {
+
+				$this->Session->setFlash($this->Auth->loginError);
+
+			}
 
 		}
 

@@ -6,16 +6,20 @@ class Student extends AppModel {
     public $useTable = 'users';
 
     var $validate = array(
-        'Studentname' => array(
+        'username' => array(
             'between' => array(
                 'rule' => array('between', 5, 15),
                 'message' => 'Between 5 to 15 characters'
-            )
+            ),
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This Username has already been taken.'
+            ),
         ),
         'email' => array(
             'isUnique' => array(
                 'rule' => 'isUnique',
-                'message' => 'This Studentname has already been taken.'
+                'message' => 'This email has already been taken.'
             ),
             'email' => array(
                 'rule' => array('email', true),
@@ -25,6 +29,10 @@ class Student extends AppModel {
                 'rule'      => 'notEmpty',
                 'message'   => 'Must not be blank',
             ),
+        ),
+        'role' => array(
+            'rule'      => 'notEmpty',
+            'message'   => 'Must not be blank',
         ),
         'password_old' => array(
             'rule'      => 'notEmpty',
@@ -43,7 +51,7 @@ class Student extends AppModel {
 
     public function checkpasswords() {
 
-        if(strcmp($this->data['Student']['password'],$this->data['Student']['password_confirm']) == 0 ) {
+        if (strcmp($this->data['Student']['password'],$this->data['Student']['password_confirm']) == 0 ) {
 
             return true;
 

@@ -22,11 +22,19 @@ class UsersController extends AppController {
 
 	public function login() {
 
+		$dataUser = $this->Auth->User();
+
+		if ($dataUser) {
+
+			$this->redirect('/Students');
+
+		}
+
 		if ($this->data) {
 
 			if ($this->Auth->login()) {
 
-				$dataUser = $this->Auth->User();
+				
 
 				$this->loadModel('UsersGroup');
 
@@ -42,7 +50,7 @@ class UsersController extends AppController {
 
 		        } else {
 
-		        	$this->redirect('/students');
+		        	$this->redirect('/Students');
 
 		        }
 

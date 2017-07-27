@@ -3,9 +3,9 @@ class StudentsController extends AppController {
 
  	var $name = "Students";
 
-    var $helpers = array("Html","Session");
+    // var $helpers = array("Html","Session");
 
-    var $components = array("Auth", "Session");
+    // var $components = array("Auth", "Session");
 
   	public function beforeFilter() {
 

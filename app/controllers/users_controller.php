@@ -3,9 +3,9 @@ class UsersController extends AppController {
 
 	var $name = "Users";
 
-	var $helpers = array("Html","Session");
+	// var $helpers = array("Html","Session");
 
-	var $components = array("Auth", "Session");
+	// var $components = array("Auth", "Session");
 
 	public function beforeFilter() {
 
@@ -35,13 +35,13 @@ class UsersController extends AppController {
 
 				$this->loadModel('UsersGroup');
 
-				$data = $this->UsersGroup->find("all", array(
+				$data = $this->UsersGroup->find("first", array(
 
 		          	'conditions' => array('user_id' => $dataUser['User']['id'] )
 
 		     	));
 
-		     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 3) {
+		     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
 
 		            $this->redirect('/Home');
 

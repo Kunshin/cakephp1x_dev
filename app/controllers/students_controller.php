@@ -1,17 +1,17 @@
 <?php
 class StudentsController extends AppController {
 
- 	public $name = "Students";
+ 	var $name = "Students";
 
-  	public $helpers = array('Html','Form');
-  	
-  	public $components = array('Auth','Session');
+    var $helpers = array("Html","Session");
+
+    var $components = array("Auth", "Session");
 
   	public function beforeFilter() {
 
-        $this->layout = 'students';
-
         parent::beforeFilter();
+
+        $this->layout = 'students';
         
         $this->Auth->deny();
 
@@ -19,7 +19,7 @@ class StudentsController extends AppController {
 
 		$this->loadModel('UsersGroup');
 
-		$data = $this->UsersGroup->find("all", array(
+		$data = $this->UsersGroup->find("first", array(
 
           	'conditions' => array('user_id' => $dataUser['User']['id'])
 
@@ -27,7 +27,7 @@ class StudentsController extends AppController {
 
         $this->set('dataUser', $data);
 
-     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 3) {
+     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
 
             return $this->redirect('/users/login');
 
@@ -40,7 +40,7 @@ class StudentsController extends AppController {
 
       	$data = $this->Student->find("all", array(
 
-          	'conditions' => array('is_deleted' => 0)
+          	'conditions' => array('is_deleted' => 0),
 
      	));
 
@@ -54,13 +54,13 @@ class StudentsController extends AppController {
 
     	$this->loadModel('UsersGroup');
 
-		$data = $this->UsersGroup->find("all", array(
+		$data = $this->UsersGroup->find("first", array(
 
           	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
-     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 2) {
+     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
 
             return $this->redirect('/Students');
 
@@ -118,57 +118,53 @@ class StudentsController extends AppController {
 
     	$this->loadModel('UsersGroup');
 
-		$data = $this->UsersGroup->find("all", array(
+		$data = $this->UsersGroup->find("first", array(
 
           	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
-     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 2) {
+     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
 
             return $this->redirect('/Students');
 
         }
 		
-		$data = $this->Student->find("all", array(
+		$data = $this->Student->find("first", array(
 
           	'conditions' => array('id' => $id)
 
      	));
 
-     	$this->set("data", $data[0]['Student']);
+     	$this->set("data", $data['Student']);
 
      	$this->Student->set($this->data);
 
-     	if ($this->data) {
+      	if ($this->Student->validates()) {
 
-	      	if ($this->Student->validates()) {
+            if ($dataUser) {
 
-                if ($dataUser) {
+                if ($this->Student->save($this->data)) {
 
-                    if ($this->Student->save($this->data)) {
+                    $this->Session->setFlash('Recipe Saved!');
 
-                        $this->Session->setFlash('Recipe Saved!');
+                    return $this->redirect('/Students');
 
-                        return $this->redirect('/Students');
+                } else {
 
-                    } else {
-
-                        $this->Session->setFlash('Error Saved !');
-
-                    }
+                    $this->Session->setFlash('Error Saved !');
 
                 }
 
-		    } else {
+            }
 
-		        $errors = $this->Student->invalidFields();
+	    } else {
 
-		        $this->Session->setFlash('Error');
+	        $errors = $this->Student->invalidFields();
 
-				$this->set("errors", $errors);
+	        $this->Session->setFlash('Error');
 
-		    }
+			$this->set("errors", $errors);
 
 	    }
 
@@ -180,13 +176,13 @@ class StudentsController extends AppController {
 
     	$this->loadModel('UsersGroup');
 
-		$data = $this->UsersGroup->find("all", array(
+		$data = $this->UsersGroup->find("first", array(
 
           	'conditions' => array('user_id' => $dataUser['User']['id'])
 
      	));
 
-     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 2) {
+     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
 
             return $this->redirect('/Students');
 
@@ -203,51 +199,5 @@ class StudentsController extends AppController {
         }
 
 	}
-
-	public function changePassword($id='') {
-
-		$data = $this->Student->find("all", array(
-
-          	'conditions' => array('id' => $id)
-
-        ));
-
-        $this->set("data", $data);
-
-        if ($this->data) {
-
-            $this->Student->set($this->data);
-            
-            if ($this->Student->validates(array('fieldList' => array('password_old', 'password', 'password_confirm')))) {
-
-                $this->Student->id = $id;
-
-                if ($this->Student->save($this->data)) {
-
-                    $this->Session->setFlash("Change Password Success !");
-                
-                    return $this->redirect('/Students/edit/'.$id);
-
-                } else {
-
-                    $this->Session->setFlash("Change Password Fail !");
-                
-                    return $this->redirect('/Students/edit/'.$id);
-                }
-
-            } else {
-
-                $this->Session->setFlash("Data Not True !");
-
-                $errors = $this->Student->invalidFields();
-
-                $this->set("errors", $errors);
-
-            }
-
-        }
-
-	}
-
 
 }

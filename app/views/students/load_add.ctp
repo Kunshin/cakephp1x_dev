@@ -9,7 +9,7 @@
 
             echo $this->Session->flash();
 
-            echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "load_add")));
+            echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "loadAdd")));
 
             echo $this->Form->input("username",array("class"=>"form-control"));
 

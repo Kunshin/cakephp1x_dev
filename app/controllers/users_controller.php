@@ -11,7 +11,7 @@ class UsersController extends AppController {
 
 		parent::beforeFilter();
 
-		$dataUser = $this->Auth->User();
+		$dataUser = $this->Auth->user();
 
 		$this->set('dataUser', $dataUser);
 
@@ -19,22 +19,19 @@ class UsersController extends AppController {
 
 	}
 
-
 	public function login() {
-
-		$dataUser = $this->Auth->User();
+		
+		$dataUser = $this->Auth->user();
 
 		if ($dataUser) {
 
-			$this->redirect('/Students');
+			$this->redirect('/Home');
 
 		}
 
 		if ($this->data) {
 
-			if ($this->Auth->login()) {
-
-				
+			if ($this->Auth->login($this->data)) {
 
 				$this->loadModel('UsersGroup');
 
@@ -46,7 +43,7 @@ class UsersController extends AppController {
 
 		     	if (!isset($data[0]['UsersGroup']['group_id']) || $data[0]['UsersGroup']['group_id'] == 3) {
 
-		            $this->Session->setFlash('Login Success - You are General User !');
+		            $this->redirect('/Home');
 
 		        } else {
 

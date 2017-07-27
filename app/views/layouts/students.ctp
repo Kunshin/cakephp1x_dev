@@ -21,11 +21,11 @@
                     <div class="container-fluid">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                            <a class="navbar-brand" href=""><span>BPO</span> University </a>
+                            <a class="navbar-brand" href="<?php echo Router::url('/Home', true) ?>"><span>BPO</span> University </a>
                         </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav custom_nav">
-                        <?php  if(isset($dataUser) && $dataUser[0]['UsersGroup']['group_id'] == 1 || $dataUser[0]['UsersGroup']['group_id'] == 2) {
+                        <?php  if(isset($dataUser) && $dataUser['UsersGroup']['group_id'] == 1 || $dataUser['UsersGroup']['group_id'] == 2) {
                             echo '<li class=""></li>';
                             echo '<li class=""><a href="'.Router::url("/Students", true).'">- Manager Student -</a></li>';
                         }?>
@@ -35,7 +35,7 @@
                 </nav>
                 <div class="nav navbar-nav navbar-right">
                     <?php
-                        if(isset($dataUser) && $dataUser[0]['UsersGroup']['group_id'] == 1 || $dataUser[0]['UsersGroup']['group_id'] == 2) {
+                        if (isset($dataUser)) {
                             echo '<li class="dropdown login-user">';
                             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">';
                             echo '<i class="fa fa-user-circle-o" aria-hidden="true"></i> User </a>';

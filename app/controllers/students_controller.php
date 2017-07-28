@@ -103,7 +103,7 @@ class StudentsController extends AppController {
 		
 		$data = $this->Student->find("first", array(
 
-          	'conditions' => array('id' => $id)
+          	'conditions' => array('Student.id' => $id)
 
      	));
 

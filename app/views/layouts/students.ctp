@@ -38,9 +38,8 @@
                         if (isset($dataUser)) {
                             echo '<li class="dropdown login-user">';
                             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">';
-                            echo '<i class="fa fa-user-circle-o" aria-hidden="true"></i> User </a>';
+                            echo '<i class="fa fa-user-circle-o" aria-hidden="true"></i>'.$dataUser['Student']['username'].'</a>';
                             echo '<ul class="dropdown-menu" role="menu">';
-                            echo '<li><a class="a-b-c" href="'.Router::url("/Users/editUser", true).'"><i class="fa fa-address-book" aria-hidden="true"></i> Profiles Manager</a></li>';
                             echo '<li><a class="a-b-c" href="'.Router::url("/Users/logout", true).'"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>';
                             echo '</ul>';
                             echo '</li>';

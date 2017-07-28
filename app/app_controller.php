@@ -42,11 +42,11 @@ class AppController extends Controller {
 
 		$dataUser = $this->Auth->User();
 
-		$this->loadModel('UsersGroup');
+		$this->loadModel('Student');
 
-		$data = $this->UsersGroup->find("first", array(
+		$data = $this->Student->find("first", array(
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'])
+          	'conditions' => array('Student.id' => $dataUser['User']['id']),
 
      	));
 

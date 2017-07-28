@@ -72,31 +72,23 @@ class Student extends AppModel {
 
     public function checkUsername() {
 
-        $data = $this->find("all", array(
+        $check = $this->find("count", array(
 
-            'conditions' => array('Student.is_deleted' => 0),
+            'conditions' => array(
+                'Student.username' => $this->data['Student']['username'],
+                'Student.is_deleted' => 0,
+
+            ),
 
         ));
 
-        $checkReplace = array();
+        if ($check > 0) {
 
-        foreach ($data as $key => $value) {
-
-            if (strcmp($this->data['Student']['username'],$value['Student']['username']) == 0) {
-
-                array_push($checkReplace, $value['Student']['username']);
-
-            }
-
-        }
-
-        if (count($checkReplace) == 0) {
-
-            return true;
+            return false;
 
         } else {
 
-            return false;
+            return true;
 
         }
         
@@ -104,31 +96,23 @@ class Student extends AppModel {
 
     public function checkEmail() {
 
-        $data = $this->find("all", array(
+        $check = $this->find("count", array(
 
-            'conditions' => array('Student.is_deleted' => 0),
+            'conditions' => array(
+                'Student.email' => $this->data['Student']['email'],
+                'Student.is_deleted' => 0,
+
+            ),
 
         ));
 
-        $checkReplace = array();
+        if ($check > 0) {
 
-        foreach ($data as $key => $value) {
-
-            if (strcmp($this->data['Student']['email'],$value['Student']['email']) == 0) {
-
-                array_push($checkReplace, $value['Student']['email']);
-
-            }
-
-        }
-
-        if (count($checkReplace) == 0) {
-
-            return true;
+            return false;
 
         } else {
 
-            return false;
+            return true;
 
         }
         

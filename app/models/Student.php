@@ -19,13 +19,13 @@ class Student extends AppModel {
                 'message' => 'Between 5 to 15 characters'
             ),
             'isUnique' => array(
-                'rule' => 'isUnique',
+                'rule' => 'checkUsername',
                 'message' => 'This Username has already been taken.'
             ),
         ),
         'email' => array(
             'isUnique' => array(
-                'rule' => 'isUnique',
+                'rule' => 'checkEmail',
                 'message' => 'This email has already been taken.'
             ),
             'email' => array(
@@ -50,15 +50,79 @@ class Student extends AppModel {
             'message' => 'Mimimum 8 characters long'
         ),
         'password_confirm' => array(
-            'rule' => 'checkpasswords' , 
+            'rule' => 'checkPasswords' , 
             'message' => 'Passwords Do Not Match'
         ),
         
     );
 
-    public function checkpasswords() {
+    public function checkPasswords() {
 
         if (strcmp($this->data['Student']['password'],$this->data['Student']['password_confirm']) == 0 ) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+        
+    }
+
+    public function checkUsername() {
+
+        $data = $this->find("all", array(
+
+            'conditions' => array('Student.is_deleted' => 0),
+
+        ));
+
+        $checkReplace = array();
+
+        foreach ($data as $key => $value) {
+
+            if (strcmp($this->data['Student']['username'],$value['Student']['username']) == 0) {
+
+                array_push($checkReplace, $value['Student']['username']);
+
+            }
+
+        }
+
+        if (count($checkReplace) == 0) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+        
+    }
+
+    public function checkEmail() {
+
+        $data = $this->find("all", array(
+
+            'conditions' => array('Student.is_deleted' => 0),
+
+        ));
+
+        $checkReplace = array();
+
+        foreach ($data as $key => $value) {
+
+            if (strcmp($this->data['Student']['email'],$value['Student']['email']) == 0) {
+
+                array_push($checkReplace, $value['Student']['email']);
+
+            }
+
+        }
+
+        if (count($checkReplace) == 0) {
 
             return true;
 

@@ -9,6 +9,8 @@ class HomeController extends AppController {
 
 		$this->layout = 'students';
 
+		$this->Auth->allow('*');
+
 		$data = $this->getDataUser();
 
 		$this->Auth->autoRedirect = false;

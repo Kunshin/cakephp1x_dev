@@ -25,17 +25,25 @@
                         </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav custom_nav">
-                        <?php if(isset($dataUser) && $dataUser['UsersGroup']['group_id'] == 1 || $dataUser['UsersGroup']['group_id'] == 2) {
-                            echo '<li class=""></li>';
-                            echo '<li class=""><a href="'.Router::url("/Students", true).'">- Manager Student -</a></li>';
-                        }?>
+                        <?php
+
+                            if (isset($dataUser) && count($dataUser) > 0) {
+
+                                if ($dataUser['UsersGroup']['group_id'] == 1 || $dataUser['UsersGroup']['group_id'] == 2) {
+                                    echo '<li class=""></li>';
+                                    echo '<li class=""><a href="'.Router::url("/Students", true).'">- Manager Student -</a></li>';
+                                }
+
+                            }
+
+                        ?>
                         </ul>
                     </div>
                     </div>
                 </nav>
                 <div class="nav navbar-nav navbar-right">
                     <?php
-                        if (isset($dataUser)) {
+                        if (isset($dataUser) && count($dataUser) > 1) {
                             echo '<li class="dropdown login-user">';
                             echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">';
                             echo '<i class="fa fa-user-circle-o" aria-hidden="true"></i>'.$dataUser['Student']['username'].'</a>';

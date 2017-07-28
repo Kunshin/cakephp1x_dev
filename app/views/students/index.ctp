@@ -20,6 +20,8 @@
 
                 foreach($data as $item) {
 
+                    echo $this->Session->flash();
+
                     echo '<tr>';
 
                     echo '<td class="td-center"><input class="checkbox" type="checkbox" name="check[]" value='.$item["Student"]["id"].'></td>';

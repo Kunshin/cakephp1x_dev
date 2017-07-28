@@ -91,67 +91,113 @@ class StudentsController extends AppController {
 
 	}
 
-	public function edit($id) {
+	public function edit($id = null) {
 
-        $dataRole = $this->checkRoleUser();
+        if (is_null($id)) {
 
-        if ($dataRole == '2') {
+            $this->Session->setFlash('User Not Exist !');
 
-            $this->redirect('/Students');
+        } else {
 
-        }
-		
-		$data = $this->Student->find("first", array(
+            $dataRole = $this->checkRoleUser();
 
-          	'conditions' => array('Student.id' => $id)
+            if ($dataRole == '2') {
 
-     	));
+                $this->redirect('/Students');
 
-     	$this->set("data", $data['Student']);
+            }
+            
+            $data = $this->Student->find("first", array(
 
-     	$this->Student->set($this->data);
+                'conditions' => array('Student.id' => $id)
 
-      	if ($this->Student->validates()) {
+            ));
 
-            if ($this->Student->save($this->data)) {
+            if (count($data) > 0) {
 
-                $this->Session->setFlash('Recipe Saved!');
+                $this->set("data", $data['Student']);
 
-                return $this->redirect('/Students');
+                if ($this->data) {
+
+                    $this->Student->set($this->data);
+
+                    if ($this->Student->validates()) {
+
+                        if ($this->Student->save($this->data)) {
+
+                            return $this->redirect('/Students');
+
+                        } else {
+
+                            $this->Session->setFlash('Error Saved !');
+
+                        }
+
+                    } else {
+
+                        $errors = $this->Student->invalidFields();
+
+                        $this->Session->setFlash('Error');
+
+                        $this->set("errors", $errors);
+
+                    }
+
+                }
 
             } else {
 
-                $this->Session->setFlash('Error Saved !');
+                $this->Session->setFlash('Data Not Exist !');
 
             }
 
-	    } else {
-
-	        $errors = $this->Student->invalidFields();
-
-	        $this->Session->setFlash('Error');
-
-			$this->set("errors", $errors);
-
-	    }
+        }
 
 	}
 
-	public function delete($id) {
+	public function delete($id = null) {
 
-        $dataRole = $this->checkRoleUser();
+        if (is_null($id)) {
 
-        if ($dataRole == '2') {
+            $this->Session->setFlash('User Not Exist !');
 
-            $this->redirect('/Students');
+        } else {
+
+            $dataRole = $this->checkRoleUser();
+
+            if ($dataRole == '2') {
+
+                $this->redirect('/Students');
+
+            }
+
+            $data = $this->Student->find("first", array(
+
+                'conditions' => array('Student.id' => $id)
+
+            ));
+
+            if (count($data) > 0) {
+
+                $this->Student->id = $data['Student']['id'];
+
+                if ($this->Student->saveField('is_deleted', 1)) {
+
+                    return $this->redirect('/Students');
+
+                } else {
+
+                    $this->Session->setFlash('Error Deleted !');
+
+                }
+
+            } else {
+
+                $this->Session->setFlash('Data Not Exist !');
+
+            }
 
         }
-
-        $this->Student->saveField('is_deleted', 1);
-
-        $this->Session->setFlash("Delete Completed !!!");
-
-        return $this->redirect('/Students');
 
 	}
 

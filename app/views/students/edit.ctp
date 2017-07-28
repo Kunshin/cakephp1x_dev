@@ -7,6 +7,8 @@
         <div class="mother-group">
             <?php
 
+                echo $this->Session->flash();
+
                 if (isset($data) && count($data) > 0) {
 
                     echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "edit" , $data["id"])));

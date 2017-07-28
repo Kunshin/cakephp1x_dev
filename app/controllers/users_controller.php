@@ -19,41 +19,55 @@ class UsersController extends AppController {
 		
 		$dataUser = $this->Auth->user();
 
-		if ($dataUser) {
+		$this->loadModel('Student');
 
-			$this->redirect('/Home');
+		$dataDelete = $this->Student->find("first", array(
 
-		}
+          	'conditions' => array('Student.id' => $dataUser['User']['id']),
 
-		if ($this->data) {
+     	));
 
-			if ($this->Auth->login($this->data)) {
+     	if ($dataDelete['Student']['is_deleted'] == 1) {
 
-				$this->loadModel('UsersGroup');
+     		$this->Session->setFlash('User Deactive !');
 
-				$data = $this->UsersGroup->find("first", array(
+     	} else if ($dataUser) {
 
-		          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+     		$this->redirect('/Home');
 
-		     	));
+     	} else {
 
-		     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
+			if ($this->data) {
 
-		            $this->redirect('/Home');
+				if ($this->Auth->login($this->data)) {
 
-		        } else {
+					$this->loadModel('UsersGroup');
 
-		        	$this->redirect('/Students');
+					$data = $this->UsersGroup->find("first", array(
 
-		        }
+			          	'conditions' => array('user_id' => $dataUser['User']['id'] )
 
-			} else {
+			     	));
 
-				$this->Session->setFlash($this->Auth->loginError);
+			     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
+
+			            $this->redirect('/Home');
+
+			        } else {
+
+			        	$this->redirect('/Students');
+
+			        }
+
+				} else {
+
+					$this->Session->setFlash($this->Auth->loginError);
+
+				}
 
 			}
 
-		}
+     	}
 
 	}
 

@@ -5,6 +5,13 @@ class Student extends AppModel {
 
     public $useTable = 'users';
 
+    public $hasOne = array(
+        'UsersGroup' => array(
+            'className' => 'UsersGroup',
+            'dependent' => true
+        )
+    );
+
     var $validate = array(
         'username' => array(
             'between' => array(

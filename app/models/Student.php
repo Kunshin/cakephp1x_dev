@@ -118,4 +118,25 @@ class Student extends AppModel {
         
     }
 
+    public function beforeSave($options = array()) {
+
+        if (isset($this->data['Student']['password'])) {
+
+            App::import( 'Component', 'Auth' );
+            
+            $this->Auth = new AuthComponent();
+
+            $hash = $this->Auth->password($this->data['Student']['password']);
+
+            $this->data['Student']['password'] = $hash;
+
+            $this->data['Student']['password_confirm'] = $hash;
+
+        }
+
+        return $hash;
+
+    }
+
+
 }

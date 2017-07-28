@@ -47,14 +47,6 @@ class StudentsController extends AppController {
 
 	    if ($this->data) {
 
-            if (isset($this->data['password']) && isset($this->data['password_confirm'])) {
-
-                $this->data['password'] = $this->Auth->password($this->data['password']);
-
-                $this->data['password_confirm'] = $this->Auth->password($this->data['password_confirm']);
-
-            }
-
             $this->Student->set($this->data);
 
 	      	if ($this->Student->validates()) {

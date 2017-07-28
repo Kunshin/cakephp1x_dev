@@ -3,10 +3,6 @@ class StudentsController extends AppController {
 
  	var $name = "Students";
 
-    // var $helpers = array("Html","Session");
-
-    // var $components = array("Auth", "Session");
-
   	public function beforeFilter() {
 
         parent::beforeFilter();
@@ -15,26 +11,17 @@ class StudentsController extends AppController {
         
         $this->Auth->deny();
 
-        $dataUser = $this->Auth->User();
+        $data = $this->getDataUser();
 
-		$this->loadModel('UsersGroup');
+        $dataRole = $this->checkRoleUser();
 
-		$data = $this->UsersGroup->find("first", array(
+        if ($dataRole == '3') {
 
-          	'conditions' => array('user_id' => $dataUser['User']['id'])
-
-     	));
-
-        $this->set('dataUser', $data);
-
-     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
-
-            return $this->redirect('/users/login');
+            $this->redirect('/Users/login');
 
         }
     
     }
-
 
   	public function index() {
 
@@ -50,19 +37,11 @@ class StudentsController extends AppController {
 
     public function loadAdd() {
 
-    	$dataUser = $this->Auth->User();
+        $dataRole = $this->checkRoleUser();
 
-    	$this->loadModel('UsersGroup');
+        if ($dataRole == '2') {
 
-		$data = $this->UsersGroup->find("first", array(
-
-          	'conditions' => array('user_id' => $dataUser['User']['id'])
-
-     	));
-
-     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
-
-            return $this->redirect('/Students');
+            $this->redirect('/Students');
 
         }
 
@@ -114,19 +93,11 @@ class StudentsController extends AppController {
 
 	public function edit($id) {
 
-		$dataUser = $this->Auth->User();
+        $dataRole = $this->checkRoleUser();
 
-    	$this->loadModel('UsersGroup');
+        if ($dataRole == '2') {
 
-		$data = $this->UsersGroup->find("first", array(
-
-          	'conditions' => array('user_id' => $dataUser['User']['id'])
-
-     	));
-
-     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
-
-            return $this->redirect('/Students');
+            $this->redirect('/Students');
 
         }
 		
@@ -142,19 +113,15 @@ class StudentsController extends AppController {
 
       	if ($this->Student->validates()) {
 
-            if ($dataUser) {
+            if ($this->Student->save($this->data)) {
 
-                if ($this->Student->save($this->data)) {
+                $this->Session->setFlash('Recipe Saved!');
 
-                    $this->Session->setFlash('Recipe Saved!');
+                return $this->redirect('/Students');
 
-                    return $this->redirect('/Students');
+            } else {
 
-                } else {
-
-                    $this->Session->setFlash('Error Saved !');
-
-                }
+                $this->Session->setFlash('Error Saved !');
 
             }
 
@@ -172,31 +139,19 @@ class StudentsController extends AppController {
 
 	public function delete($id) {
 
-		$dataUser = $this->Auth->User();
+        $dataRole = $this->checkRoleUser();
 
-    	$this->loadModel('UsersGroup');
+        if ($dataRole == '2') {
 
-		$data = $this->UsersGroup->find("first", array(
-
-          	'conditions' => array('user_id' => $dataUser['User']['id'])
-
-     	));
-
-     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
-
-            return $this->redirect('/Students');
+            $this->redirect('/Students');
 
         }
 
-        if ($dataUser) {
+        $this->Student->saveField('is_deleted', 1);
 
-            $this->Student->saveField('is_deleted', 1);
+        $this->Session->setFlash("Delete Completed !!!");
 
-            $this->Session->setFlash("Delete Completed !!!");
-
-            return $this->redirect('/Students');
-
-        }
+        return $this->redirect('/Students');
 
 	}
 

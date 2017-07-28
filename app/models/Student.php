@@ -1,6 +1,6 @@
 <?php
 class Student extends AppModel {
-    
+
     var $name = "Student";
 
     public $useTable = 'users';

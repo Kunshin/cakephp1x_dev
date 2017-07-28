@@ -38,4 +38,50 @@ class AppController extends Controller {
 
 	var $components = array('Auth', 'Session');
 
+	public function getDataUser() {
+
+		$dataUser = $this->Auth->User();
+
+		$this->loadModel('UsersGroup');
+
+		$data = $this->UsersGroup->find("first", array(
+
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
+
+     	));
+
+     	$this->set('dataUser', $data);
+
+     	return $data;
+
+    }
+
+    public function checkRoleUser() {
+
+    	$dataUser = $this->Auth->User();
+
+		$this->loadModel('UsersGroup');
+
+		$data = $this->UsersGroup->find("first", array(
+
+          	'conditions' => array('user_id' => $dataUser['User']['id'])
+
+     	));
+
+        if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
+
+            return 2;
+
+        } else if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
+
+        	return 3;
+
+        } else {
+
+        	return 1;
+
+        }
+
+    }
+
 }

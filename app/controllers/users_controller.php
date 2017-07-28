@@ -3,10 +3,6 @@ class UsersController extends AppController {
 
 	var $name = "Users";
 
-	// var $helpers = array("Html","Session");
-
-	// var $components = array("Auth", "Session");
-
 	public function beforeFilter() {
 
 		parent::beforeFilter();

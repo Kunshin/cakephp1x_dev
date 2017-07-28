@@ -25,7 +25,7 @@
                         </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav custom_nav">
-                        <?php  if(isset($dataUser) && $dataUser['UsersGroup']['group_id'] == 1 || $dataUser['UsersGroup']['group_id'] == 2) {
+                        <?php if(isset($dataUser) && $dataUser['UsersGroup']['group_id'] == 1 || $dataUser['UsersGroup']['group_id'] == 2) {
                             echo '<li class=""></li>';
                             echo '<li class=""><a href="'.Router::url("/Students", true).'">- Manager Student -</a></li>';
                         }?>

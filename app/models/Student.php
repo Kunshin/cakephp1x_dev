@@ -118,7 +118,7 @@ class Student extends AppModel {
         
     }
 
-    public function beforeSave($options = array()) {
+    public function beforeAdd($options = array()) {
 
         if (isset($this->data['Student']['password'])) {
 

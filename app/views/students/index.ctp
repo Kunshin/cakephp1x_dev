@@ -11,6 +11,7 @@
             <th>ID</th>
             <th>Student Name</th>
             <th>Email</th>
+            <th>Info</th>
             <th>Pasword</th>
             <th>Action</th>
         </tr>
@@ -31,6 +32,8 @@
                     echo '<td>'.$item["Student"]["username"].'</td>';
 
                     echo '<td>'.$item["Student"]["email"].'</td>';
+
+                    echo '<td>'.$item["Student"]["info"].'</td>';
 
                     echo '<td>'.$item["Student"]["password"].'</td>';
 

@@ -13,7 +13,7 @@
 
                     echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "edit" , $data["id"])));
 
-                    echo $this->Form->input("username", array("default"=> $data["username"],"class"=>"form-control"));
+                    echo $this->Form->input("username", array("default"=> $data["username"],"class"=>"form-control","disabled" => "disabled"));
 
                     echo (isset($errors) && isset($errors["username"])) ? $errors["username"] : "";
 
@@ -21,11 +21,15 @@
 
                     echo (isset($errors) && isset($errors["email"])) ? $errors["email"] : "";
 
+                    echo $this->Form->input("info", array("default"=> $data["info"],"class"=>"form-control"));
+
+                    echo (isset($errors) && isset($errors["info"])) ? $errors["info"] : "";
+
                     echo '<hr>';
 
                     $options = array(
                         "label" => "Update",
-                        "class" => "btn btn-danger"
+                        "class" => "btn btn-success"
                     );
 
                     echo $this->Form->end($options);

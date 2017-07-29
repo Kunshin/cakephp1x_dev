@@ -9,6 +9,8 @@
 
             echo $this->Session->flash();
 
+            echo '<hr>';
+
             echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "loadAdd")));
 
             echo $this->Form->input("username",array("class"=>"form-control"));
@@ -18,6 +20,10 @@
             echo $this->Form->input("email",array("class"=>"form-control"));
 
             echo (isset($errors) && isset($errors["email"])) ? $errors["email"] : "";
+
+            echo $this->Form->input("info",array("class"=>"form-control"));
+
+            echo (isset($errors) && isset($errors["info"])) ? $errors["info"] : "";
 
             echo $this->Form->input("role", array(
                 "options" => array(

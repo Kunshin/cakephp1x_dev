@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2017 at 03:01 AM
+-- Generation Time: Jul 29, 2017 at 09:30 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -51,6 +51,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `info` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `is_deleted` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -59,11 +60,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_deleted`) VALUES
-(1, 'admin2', '111@111.com', '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0),
-(2, '22222', '222@222.com', '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0),
-(3, '33333', '333@333.com', '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0),
-(4, '44444', '444@444.com', '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0);
+INSERT INTO `users` (`id`, `username`, `email`, `info`, `password`, `is_deleted`) VALUES
+(1, 'admin', '111@111.com', NULL, '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0),
 
 -- --------------------------------------------------------
 
@@ -83,8 +81,6 @@ CREATE TABLE `users_groups` (
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
-(2, 4, 1),
-(3, 3, 2);
 
 --
 -- Indexes for dumped tables
@@ -116,17 +112,17 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

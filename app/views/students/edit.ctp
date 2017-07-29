@@ -21,18 +21,16 @@
 
                     echo (isset($errors) && isset($errors["email"])) ? $errors["email"] : "";
 
+                    echo '<hr>';
+
+                    $options = array(
+                        "label" => "Update",
+                        "class" => "btn btn-danger"
+                    );
+
+                    echo $this->Form->end($options);
+
                 }
-
-            ?>
-            <hr>
-            <?php
-
-                $options = array(
-                    "label" => "Update",
-                    "class" => "btn btn-danger"
-                );
-
-                echo $this->Form->end($options);
 
             ?>
         </div>

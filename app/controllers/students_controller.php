@@ -85,23 +85,26 @@ class StudentsController extends AppController {
 
 	public function edit($id = null) {
 
+        $dataRole = $this->checkRoleUser();
+
+        if ($dataRole == '2') {
+
+            $this->redirect('/Students');
+
+        }
+
         if (is_null($id)) {
 
             $this->Session->setFlash('User Not Exist !');
 
         } else {
-
-            $dataRole = $this->checkRoleUser();
-
-            if ($dataRole == '2') {
-
-                $this->redirect('/Students');
-
-            }
             
             $data = $this->Student->find("first", array(
 
-                'conditions' => array('Student.id' => $id)
+                'conditions' => array(
+                    'Student.id' => $id,
+                    'Student.is_deleted' => 0,
+                )
 
             ));
 
@@ -149,23 +152,26 @@ class StudentsController extends AppController {
 
 	public function delete($id = null) {
 
+        $dataRole = $this->checkRoleUser();
+
+        if ($dataRole == '2') {
+
+            $this->redirect('/Students');
+
+        }
+
         if (is_null($id)) {
 
             $this->Session->setFlash('User Not Exist !');
 
         } else {
 
-            $dataRole = $this->checkRoleUser();
-
-            if ($dataRole == '2') {
-
-                $this->redirect('/Students');
-
-            }
-
             $data = $this->Student->find("first", array(
 
-                'conditions' => array('Student.id' => $id)
+                'conditions' => array(
+                    'Student.id' => $id,
+                    'Student.is_deleted' => 0,
+                )
 
             ));
 

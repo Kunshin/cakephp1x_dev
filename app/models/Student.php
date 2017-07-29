@@ -118,7 +118,7 @@ class Student extends AppModel {
         
     }
 
-    public function beforeAdd($options = array()) {
+    public function beforeSave($options = array()) {
 
         if (isset($this->data['Student']['password'])) {
 
@@ -133,6 +133,8 @@ class Student extends AppModel {
             return $hash;
 
         }
+
+        return true;
 
     }
 

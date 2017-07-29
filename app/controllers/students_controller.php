@@ -51,12 +51,6 @@ class StudentsController extends AppController {
 
 	      	if ($this->Student->validates()) {
 
-                $dataRole = $this->Student->beforeAdd();
-
-                $this->data['Student']['password'] = $dataRole;
-
-                $this->data['Student']['password_confirm'] = $dataRole;
-
                 if ($this->Student->save($this->data)) {
 
                     $student_id = $this->Student->getLastInsertId();

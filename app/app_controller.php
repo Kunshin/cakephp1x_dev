@@ -36,7 +36,11 @@ class AppController extends Controller {
 
 	var $helpers = array('Html','Session','Form');
 
-	var $components = array('Auth', 'Session');
+	var $components = array(
+		'Auth' => array(
+            'userScope' => array('is_deleted' => 0)
+        ),
+		'Session');
 
 	public function getDataUser() {
 

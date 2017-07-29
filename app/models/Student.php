@@ -130,13 +130,10 @@ class Student extends AppModel {
 
             $this->data['Student']['password'] = $hash;
 
-            $this->data['Student']['password_confirm'] = $hash;
+            return $hash;
 
         }
 
-        return $hash;
-
     }
-
 
 }

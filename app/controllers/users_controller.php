@@ -19,25 +19,21 @@ class UsersController extends AppController {
 		
 		$dataUser = $this->Auth->user();
 
-		$this->loadModel('Student');
+		if ($dataUser) {
 
-		$dataDelete = $this->Student->find("first", array(
+			$this->redirect('/Home');
 
-          	'conditions' => array('Student.id' => $dataUser['User']['id']),
-
-     	));
-
-     	if ($dataDelete['Student']['is_deleted'] == 1) {
-
-     		$this->Session->setFlash('User Deactive !');
-
-     	} else if ($dataUser) {
-
-     		$this->redirect('/Home');
-
-     	} else {
+		} else {
 
 			if ($this->data) {
+
+				$this->loadModel('Student');
+
+				$dataDelete = $this->Student->find("first", array(
+
+		          	'conditions' => array('Student.id' => $dataUser['User']['id']),
+
+		     	));
 
 				if ($this->Auth->login($this->data)) {
 
@@ -67,7 +63,7 @@ class UsersController extends AppController {
 
 			}
 
-     	}
+		}
 
 	}
 

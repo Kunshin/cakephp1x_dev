@@ -52,7 +52,7 @@
                             echo '</ul>';
                             echo '</li>';
                         } else {
-                            echo '<li class="dropdown login-header"><a class="dropdown-toggle" href="'.Router::url("/Users/login", true).'"><i class="fa fa-user-circle-o" aria-hidden="true"></i> LOGIN </a></li>';
+                            echo '<li class="dropdown login-header"><a class="dropdown-toggle" href="'.Router::url("/Users/login", true).'"><i class="fa fa-user-circle-o" aria-hidden="true"></i>'.'- '.'LOGIN'.' -'.'</a></li>';
                         }
                     ?>
                 </div>

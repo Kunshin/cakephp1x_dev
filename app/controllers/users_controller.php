@@ -7,10 +7,6 @@ class UsersController extends AppController {
 
 		parent::beforeFilter();
 
-		$dataUser = $this->Auth->user();
-
-		$this->set('dataUser', $dataUser);
-
 		$this->Auth->autoRedirect = false;
 
 	}
@@ -27,39 +23,37 @@ class UsersController extends AppController {
 
 			if ($this->data) {
 
-				$this->loadModel('Student');
+				$this->Session->setFlash($this->Auth->loginError);
+				
+			}
 
-				$dataDelete = $this->Student->find("first", array(
+			$this->loadModel('Student');
 
-		          	'conditions' => array('Student.id' => $dataUser['User']['id']),
+			$dataDelete = $this->Student->find("first", array(
+
+	          	'conditions' => array('Student.id' => $dataUser['User']['id']),
+
+	     	));
+
+			if ($this->Auth->login($this->data)) {
+
+				$this->loadModel('UsersGroup');
+
+				$data = $this->UsersGroup->find("first", array(
+
+		          	'conditions' => array('user_id' => $dataUser['User']['id'] )
 
 		     	));
 
-				if ($this->Auth->login($this->data)) {
+		     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
 
-					$this->loadModel('UsersGroup');
+		            $this->redirect('/Home');
 
-					$data = $this->UsersGroup->find("first", array(
+		        } else {
 
-			          	'conditions' => array('user_id' => $dataUser['User']['id'] )
+		        	$this->redirect('/Students');
 
-			     	));
-
-			     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
-
-			            $this->redirect('/Home');
-
-			        } else {
-
-			        	$this->redirect('/Students');
-
-			        }
-
-				} else {
-
-					$this->Session->setFlash($this->Auth->loginError);
-
-				}
+		        }
 
 			}
 

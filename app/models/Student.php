@@ -17,6 +17,7 @@ class Student extends AppModel {
             'empty' => array(
                 'rule'      => 'notEmpty',
                 'message'   => 'Must not be blank',
+                'required' => true
             ),
             'between' => array(
                 'rule' => array('between', 5, 15),
@@ -39,20 +40,24 @@ class Student extends AppModel {
             'empty' => array(
                 'rule'      => 'notEmpty',
                 'message'   => 'Must not be blank',
+                'required' => true
             ),
         ),
         'role' => array(
             'rule'      => 'notEmpty',
             'message'   => 'Must not be blank',
+            'required' => true
         ),
         'password_old' => array(
             'rule'      => 'notEmpty',
             'message'   => 'Must not be blank',
+            'required' => true
         ),
         'password' => array(
             'empty' => array(
                 'rule'      => 'notEmpty',
                 'message'   => 'Must not be blank',
+                'required' => true
             ),
             'minLength' => array(
                 'rule' => array('minLength', '8'),
@@ -63,6 +68,7 @@ class Student extends AppModel {
             'empty' => array(
                 'rule'      => 'notEmpty',
                 'message'   => 'Must not be blank',
+                'required' => true
             ),
             'checkPasswords' => array(
                 'rule' => 'checkPasswords' , 

@@ -132,8 +132,6 @@ class StudentsController extends AppController {
 
                             $this->Session->setFlash('Error Saved !');
 
-                            return $this->redirect('/Students');
-
                         }
 
                     } else {
@@ -141,8 +139,6 @@ class StudentsController extends AppController {
                         $errors = $this->Student->invalidFields();
 
                         $this->Session->setFlash('Error');
-
-                        return $this->redirect('/Students');
 
                         $this->set("errors", $errors);
 

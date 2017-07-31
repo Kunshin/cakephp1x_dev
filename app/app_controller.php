@@ -80,17 +80,21 @@ class AppController extends Controller {
 
      	));
 
-        if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 2) {
+        if (count($data) > 0) {
 
-            return 2;
+            if ($data['UsersGroup']['group_id'] == 2) {
 
-        } else if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
+                return 2;
 
-        	return 3;
+            } else if ($data['UsersGroup']['group_id'] == 3) {
 
-        } else {
+                return 3;
 
-        	return 1;
+            } else {
+
+                return 1;
+
+            }
 
         }
 

@@ -62,7 +62,7 @@ class StudentsController extends AppController {
                     return $this->redirect('/Students');
 
                 } else {
-                    
+
                     $this->Session->setFlash('Save Error !');
 
                 }
@@ -114,27 +114,19 @@ class StudentsController extends AppController {
 
                 if ($this->data) {
 
-                    if (isset($this->data['email']) || isset($this->data['username'])) {
+                    $this->Student->id = $data['Student']['id'];
 
-                        $this->Session->setFlash('Email or Username not True!');
+                    if ($this->Student->save($this->data, false, array('info'))) {
+
+                        $this->Session->setFlash('Data Saved !');
+
+                        return $this->redirect('/Students');
 
                     } else {
 
-                        $this->Student->set($this->data);
+                        $this->Session->setFlash('Error Saved !');
 
-                        $this->Student->id = $data['Student']['id'];
-
-                        if ($this->Student->saveField('info',$this->data['info'])) {
-
-                            $this->Session->setFlash('Data Saved !');
-
-                            return $this->redirect('/Students');
-
-                        } else {
-
-                            $this->Session->setFlash('Error Saved !');
-
-                        }                        
+                        return $this->redirect('/Students');
 
                     }
 
@@ -200,6 +192,8 @@ class StudentsController extends AppController {
                     } else {
 
                         $this->Session->setFlash('Error Deleted !');
+
+                        return $this->redirect('/Students');
 
                     }
 

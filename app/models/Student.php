@@ -48,11 +48,6 @@ class Student extends AppModel {
             'message'   => 'Must not be blank',
             'required' => true
         ),
-        'password_old' => array(
-            'rule'      => 'notEmpty',
-            'message'   => 'Must not be blank',
-            'required' => true
-        ),
         'password' => array(
             'empty' => array(
                 'rule'      => 'notEmpty',
@@ -151,9 +146,6 @@ class Student extends AppModel {
             $hash = $this->Auth->password($this->data['Student']['password']);
 
             $this->data['Student']['password'] = $hash;
-
-            return $hash;
-
         }
 
         return true;

@@ -11,8 +11,6 @@ class StudentsController extends AppController {
         
         $this->Auth->deny();
 
-        $data = $this->getDataUser();
-
         $dataRole = $this->checkRoleUser();
 
         if ($dataRole == '3') {
@@ -64,8 +62,8 @@ class StudentsController extends AppController {
                     return $this->redirect('/Students');
 
                 } else {
-
-                    $this->Session->setFlash('<h3>Save Error !</h3>');
+                    
+                    $this->Session->setFlash('Save Error !');
 
                 }
 
@@ -73,7 +71,7 @@ class StudentsController extends AppController {
 
 		    	$errors = $this->Student->invalidFields();
 
-		        $this->Session->setFlash('<h3> Error !</h3>');
+		        $this->Session->setFlash('Error !');
 
 				$this->set("errors", $errors);
 
@@ -116,13 +114,17 @@ class StudentsController extends AppController {
 
                 if ($this->data) {
 
-                    $this->Student->set($this->data);
+                    if (isset($this->data['email']) || isset($this->data['username'])) {
 
-                    if ($this->Student->validates()) {
+                        $this->Session->setFlash('Email or Username not True!');
+
+                    } else {
+
+                        $this->Student->set($this->data);
 
                         $this->Student->id = $data['Student']['id'];
 
-                        if ($this->Student->save($this->data, true)) {
+                        if ($this->Student->saveField('info',$this->data['info'])) {
 
                             $this->Session->setFlash('Data Saved !');
 
@@ -132,15 +134,7 @@ class StudentsController extends AppController {
 
                             $this->Session->setFlash('Error Saved !');
 
-                        }
-
-                    } else {
-
-                        $errors = $this->Student->invalidFields();
-
-                        $this->Session->setFlash('Error');
-
-                        $this->set("errors", $errors);
+                        }                        
 
                     }
 
@@ -206,8 +200,6 @@ class StudentsController extends AppController {
                     } else {
 
                         $this->Session->setFlash('Error Deleted !');
-
-                        return $this->redirect('/Students');
 
                     }
 

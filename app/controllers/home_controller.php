@@ -11,8 +11,6 @@ class HomeController extends AppController {
 
 		$this->Auth->allow('*');
 
-		$data = $this->getDataUser();
-
 		$this->Auth->autoRedirect = false;
 
 	}

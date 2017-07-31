@@ -12,10 +12,8 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
-		
-		$dataUser = $this->Auth->user();
 
-		if ($dataUser) {
+		if ($this->Auth->user()) {
 
 			$this->redirect('/Home');
 
@@ -25,36 +23,6 @@ class UsersController extends AppController {
 
 				$this->Session->setFlash($this->Auth->loginError);
 				
-			}
-
-			$this->loadModel('Student');
-
-			$dataDelete = $this->Student->find("first", array(
-
-	          	'conditions' => array('Student.id' => $dataUser['User']['id']),
-
-	     	));
-
-			if ($this->Auth->login($this->data)) {
-
-				$this->loadModel('UsersGroup');
-
-				$data = $this->UsersGroup->find("first", array(
-
-		          	'conditions' => array('user_id' => $dataUser['User']['id'] )
-
-		     	));
-
-		     	if (!isset($data['UsersGroup']['group_id']) || $data['UsersGroup']['group_id'] == 3) {
-
-		            $this->redirect('/Home');
-
-		        } else {
-
-		        	$this->redirect('/Students');
-
-		        }
-
 			}
 
 		}

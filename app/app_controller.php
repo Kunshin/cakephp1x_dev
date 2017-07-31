@@ -42,6 +42,14 @@ class AppController extends Controller {
         ),
 		'Session');
 
+    public function beforeFilter() {
+
+        parent::beforeFilter();
+
+        $data = $this->getDataUser();
+    
+    }
+
 	public function getDataUser() {
 
 		$dataUser = $this->Auth->User();

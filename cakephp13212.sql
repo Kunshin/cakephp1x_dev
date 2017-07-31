@@ -61,7 +61,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `info`, `password`, `is_deleted`) VALUES
-(1, 'admin', '111@111.com', NULL, '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0),
+(1, 'admin', '111@111.com', NULL, '88ea39439e74fa27c09a4fc0bc8ebe6d00978392', 0);
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE `users_groups` (
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1),
+(1, 1, 1);
 
 --
 -- Indexes for dumped tables

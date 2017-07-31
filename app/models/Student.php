@@ -14,6 +14,10 @@ class Student extends AppModel {
 
     var $validate = array(
         'username' => array(
+            'empty' => array(
+                'rule'      => 'notEmpty',
+                'message'   => 'Must not be blank',
+            ),
             'between' => array(
                 'rule' => array('between', 5, 15),
                 'message' => 'Between 5 to 15 characters'
@@ -46,12 +50,24 @@ class Student extends AppModel {
             'message'   => 'Must not be blank',
         ),
         'password' => array(
-            'rule' => array('minLength', '8'),
-            'message' => 'Mimimum 8 characters long'
+            'empty' => array(
+                'rule'      => 'notEmpty',
+                'message'   => 'Must not be blank',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', '8'),
+                'message' => 'Mimimum 8 characters long'
+            ),
         ),
         'password_confirm' => array(
-            'rule' => 'checkPasswords' , 
-            'message' => 'Passwords Do Not Match'
+            'empty' => array(
+                'rule'      => 'notEmpty',
+                'message'   => 'Must not be blank',
+            ),
+            'checkPasswords' => array(
+                'rule' => 'checkPasswords' , 
+                'message' => 'Passwords Do Not Match'
+            ),
         ),
         
     );

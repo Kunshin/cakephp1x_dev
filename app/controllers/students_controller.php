@@ -97,6 +97,8 @@ class StudentsController extends AppController {
 
             $this->Session->setFlash('User Not Exist !');
 
+            $this->redirect('/Students');
+
         } else {
             
             $data = $this->Student->find("first", array(
@@ -122,11 +124,15 @@ class StudentsController extends AppController {
 
                         if ($this->Student->save($this->data, true)) {
 
+                            $this->Session->setFlash('Data Saved !');
+
                             return $this->redirect('/Students');
 
                         } else {
 
                             $this->Session->setFlash('Error Saved !');
+
+                            return $this->redirect('/Students');
 
                         }
 
@@ -135,6 +141,8 @@ class StudentsController extends AppController {
                         $errors = $this->Student->invalidFields();
 
                         $this->Session->setFlash('Error');
+
+                        return $this->redirect('/Students');
 
                         $this->set("errors", $errors);
 
@@ -145,6 +153,8 @@ class StudentsController extends AppController {
             } else {
 
                 $this->Session->setFlash('Data Not Exist !');
+
+                return $this->redirect('/Students');
 
             }
 
@@ -168,32 +178,50 @@ class StudentsController extends AppController {
 
         } else {
 
-            $data = $this->Student->find("first", array(
+            $dataUser = $this->getDataUser();
 
-                'conditions' => array(
-                    'Student.id' => $id,
-                    'Student.is_deleted' => 0,
-                )
+            if ($dataUser['Student']['id'] == $id) {
 
-            ));
+                $this->Session->setFlash('Can not delete login account !');
 
-            if (count($data) > 0) {
-
-                $this->Student->id = $data['Student']['id'];
-
-                if ($this->Student->saveField('is_deleted', 1)) {
-
-                    return $this->redirect('/Students');
-
-                } else {
-
-                    $this->Session->setFlash('Error Deleted !');
-
-                }
+                $this->redirect('/Students');
 
             } else {
 
-                $this->Session->setFlash('Data Not Exist !');
+                $data = $this->Student->find("first", array(
+
+                    'conditions' => array(
+                        'Student.id' => $id,
+                        'Student.is_deleted' => 0,
+                    )
+
+                ));
+
+                if (count($data) > 0) {
+
+                    $this->Student->id = $data['Student']['id'];
+
+                    if ($this->Student->saveField('is_deleted', 1)) {
+
+                        $this->Session->setFlash('Deleted Success !');
+
+                        return $this->redirect('/Students');
+
+                    } else {
+
+                        $this->Session->setFlash('Error Deleted !');
+
+                        return $this->redirect('/Students');
+
+                    }
+
+                } else {
+
+                    $this->Session->setFlash('Data Not Exist !');
+
+                    return $this->redirect('/Students');
+
+                }
 
             }
 

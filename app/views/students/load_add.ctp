@@ -9,8 +9,6 @@
 
             echo $this->Session->flash();
 
-            echo '<hr>';
-
             echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "loadAdd")));
 
             echo $this->Form->input("username",array("class"=>"form-control"));

@@ -5,9 +5,9 @@
     <hr>
     <h1 id="respose" style="text-align: center;color: green" ></h1>
     <br>
+    <?php echo $this->Session->flash(); ?>
     <table class="table table-striped table-bordered">
         <tr>
-            <th><input type="checkbox" id="select_all"/></th>
             <th>ID</th>
             <th>Student Name</th>
             <th>Email</th>
@@ -21,11 +21,7 @@
 
                 foreach($data as $item) {
 
-                    echo $this->Session->flash();
-
                     echo '<tr>';
-
-                    echo '<td class="td-center"><input class="checkbox" type="checkbox" name="check[]" value='.$item["Student"]["id"].'></td>';
 
                     echo '<td>'.$item["Student"]["id"].'</td>';
 

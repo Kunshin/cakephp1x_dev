@@ -7,8 +7,6 @@ class UsersController extends AppController {
 
 		parent::beforeFilter();
 
-		$this->Auth->autoRedirect = false;
-
 	}
 
 	public function login() {

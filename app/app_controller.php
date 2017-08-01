@@ -46,6 +46,8 @@ class AppController extends Controller {
 
         parent::beforeFilter();
 
+        $this->Auth->autoRedirect = false;
+
         $this->dataUser = $this->getDataUser();
     
     }
@@ -88,13 +90,11 @@ class AppController extends Controller {
 
           		return $data['UsersGroup']['group_id'];
 
-          	} else {
-
-          		return null;
-
           	}
 
         }
+
+        return null;
 
     }
 

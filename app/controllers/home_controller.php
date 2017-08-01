@@ -11,8 +11,6 @@ class HomeController extends AppController {
 
 		$this->Auth->allow('*');
 
-		$this->Auth->autoRedirect = false;
-
 	}
 
 

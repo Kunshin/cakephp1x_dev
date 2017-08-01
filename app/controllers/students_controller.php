@@ -15,6 +15,8 @@ class StudentsController extends AppController {
 
         if ($dataRole == '3') {
 
+            $this->Session->setFlash('You are not authorized !');
+
             $this->redirect('/Users/login');
 
         }
@@ -26,6 +28,7 @@ class StudentsController extends AppController {
       	$data = $this->Student->find("all", array(
 
           	'conditions' => array('is_deleted' => 0),
+            'order' => 'Student.id ASC',
 
      	));
 
@@ -38,6 +41,8 @@ class StudentsController extends AppController {
         $dataRole = $this->checkRoleUser();
 
         if ($dataRole == '2') {
+
+            $this->Session->setFlash('You are not authorized !');
 
             $this->redirect('/Students');
 
@@ -59,7 +64,7 @@ class StudentsController extends AppController {
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
 
-                    return $this->redirect('/Students');
+                    $this->redirect('/Students');
 
                 } else {
 
@@ -86,6 +91,8 @@ class StudentsController extends AppController {
         $dataRole = $this->checkRoleUser();
 
         if ($dataRole == '2') {
+
+            $this->Session->setFlash('You are not authorized !');
 
             $this->redirect('/Students');
 
@@ -120,13 +127,13 @@ class StudentsController extends AppController {
 
                         $this->Session->setFlash('Data Saved !');
 
-                        return $this->redirect('/Students');
+                        $this->redirect('/Students');
 
                     } else {
 
                         $this->Session->setFlash('Error Saved !');
 
-                        return $this->redirect('/Students');
+                        $this->redirect('/Students');
 
                     }
 
@@ -136,7 +143,7 @@ class StudentsController extends AppController {
 
                 $this->Session->setFlash('Data Not Exist !');
 
-                return $this->redirect('/Students');
+                $this->redirect('/Students');
 
             }
 
@@ -150,6 +157,8 @@ class StudentsController extends AppController {
 
         if ($dataRole == '2') {
 
+            $this->Session->setFlash('You are not authorized !');
+
             $this->redirect('/Students');
 
         }
@@ -158,11 +167,11 @@ class StudentsController extends AppController {
 
             $this->Session->setFlash('User Not Exist !');
 
+            $this->redirect('/Students');
+
         } else {
 
-            $dataUser = $this->getDataUser();
-
-            if ($dataUser['Student']['id'] == $id) {
+            if ($this->dataUser['Student']['id'] == $id) {
 
                 $this->Session->setFlash('Can not delete login account !');
 
@@ -187,13 +196,13 @@ class StudentsController extends AppController {
 
                         $this->Session->setFlash('Deleted Success !');
 
-                        return $this->redirect('/Students');
+                        $this->redirect('/Students');
 
                     } else {
 
                         $this->Session->setFlash('Error Deleted !');
 
-                        return $this->redirect('/Students');
+                        $this->redirect('/Students');
 
                     }
 
@@ -201,7 +210,7 @@ class StudentsController extends AppController {
 
                     $this->Session->setFlash('Data Not Exist !');
 
-                    return $this->redirect('/Students');
+                    $this->redirect('/Students');
 
                 }
 

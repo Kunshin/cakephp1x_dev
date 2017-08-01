@@ -46,9 +46,11 @@ class AppController extends Controller {
 
         parent::beforeFilter();
 
-        $data = $this->getDataUser();
+        $this->dataUser = $this->getDataUser();
     
     }
+
+    public $dataUser = null;
 
 	public function getDataUser() {
 
@@ -82,19 +84,15 @@ class AppController extends Controller {
 
         if (count($data) > 0) {
 
-            if ($data['UsersGroup']['group_id'] == 2) {
+          	if (isset($data['UsersGroup']['group_id'])) {
 
-                return 2;
+          		return $data['UsersGroup']['group_id'];
 
-            } else if ($data['UsersGroup']['group_id'] == 3) {
+          	} else {
 
-                return 3;
+          		return null;
 
-            } else {
-
-                return 1;
-
-            }
+          	}
 
         }
 

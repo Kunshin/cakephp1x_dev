@@ -45,3 +45,10 @@ a {
     min-width: 160px;
     text-align: center;
 }
+
+.login_fr {
+    display: inline-block;
+    padding: 30px;
+    margin-top: 20%;
+    background-color: #d31a48;
+}

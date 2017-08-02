@@ -13,6 +13,7 @@ class Student extends AppModel {
     );
 
     var $validate = array(
+        
         'username' => array(
             'empty' => array(
                 'rule'      => 'notEmpty',

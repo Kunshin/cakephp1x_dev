@@ -64,7 +64,7 @@ class StudentsController extends AppController {
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
 
-                    $send = $this->_sendNewUserMail($student_id, $this->data);
+                    $send = $this->_sendNewUserMail($student_id, $this->data, 'simple_message');
 
                     if ($send) {
 
@@ -98,9 +98,9 @@ class StudentsController extends AppController {
 
 	}
 
-    public function _sendNewUserMail($id, $data) {
+    public function _sendNewUserMail($id = null, $data = null, $template = null) {
 
-        if (is_null($id) || is_null($data)) {
+        if (is_null($id) || is_null($data) || is_null($template)) {
 
             return false;
 
@@ -120,7 +120,7 @@ class StudentsController extends AppController {
 
             $this->Email->from = 'Test CakePHP 1.3';
 
-            $this->Email->template = 'simple_message';
+            $this->Email->template = $template;
 
             $this->Email->sendAs = 'both';
 
@@ -279,5 +279,5 @@ class StudentsController extends AppController {
         }
 
 	}
-
+    
 }

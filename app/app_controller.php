@@ -38,7 +38,10 @@ class AppController extends Controller {
 
 	var $components = array(
 		'Auth' => array(
-            'userScope' => array('is_deleted' => 0)
+            'userScope' => array(
+                'is_deleted' => 0,
+                'is_actived' => 1
+                )
         ),
 		'Session',
     'Email');

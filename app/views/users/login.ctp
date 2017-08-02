@@ -8,9 +8,10 @@
 				$options = array(
 		            "label" => "Submit",
 		            "class" => "btn btn-success"
-		        ); 
+		        );
 		    ?>
 			<?php echo $this->Form->end($options); ?>
+			<a class="btn btn-success" href="<?php echo Router::url('/Users/forgotPassword',true) ?>" role="button"><i class="fa fa-address-card-o" aria-hidden="true"></i> Forgot Password >></a>
 		</div>
 	</div>
 </div>

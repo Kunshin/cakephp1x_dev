@@ -64,7 +64,19 @@ class StudentsController extends AppController {
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
 
-                    $this->redirect('/Students');
+                    $send = $this->_sendNewUserMail($student_id, $this->data);
+
+                    if ($send) {
+
+                        $this->Session->setFlash('Add User Success !');
+
+                        $this->redirect('/Students');
+
+                    } else {
+
+                        $this->set('smtp_errors', $this->Email->smtpError);
+
+                    }
 
                 } else {
 
@@ -85,6 +97,54 @@ class StudentsController extends AppController {
 	    }
 
 	}
+
+    public function _sendNewUserMail($id, $data) {
+
+        if (is_null($id) || is_null($data)) {
+
+            return false;
+
+        } else {
+
+            $User = $this->Student->read(null,$id);
+
+            $UserInput = $data;
+
+            $this->Email->to = $User['Student']['email'];
+
+            $this->Email->bcc = array('secret@example.com');
+
+            $this->Email->subject = 'Information for New User !';
+
+            $this->Email->replyTo = 'minhhoang.1907994@gmail.com';
+
+            $this->Email->from = 'Test CakePHP 1.3';
+
+            $this->Email->template = 'simple_message';
+
+            $this->Email->sendAs = 'both';
+
+            $this->set('User', $User);
+
+            $this->set('UserInput', $UserInput);
+
+            $this->Email->delivery = 'smtp';
+
+            $this->Email->smtpOptions = array(
+                'port'=>'465',
+                'host' => 'ssl://smtp.gmail.com',
+                'username'=>'minhhoang.1907994@gmail.com',
+                'password'=>'aA121212',
+                'client' => null
+            );
+
+            $check = $this->Email->send();
+
+            return $check;
+
+        }
+
+    }
 
 	public function edit($id = null) {
 

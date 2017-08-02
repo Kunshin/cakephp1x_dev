@@ -40,7 +40,8 @@ class AppController extends Controller {
 		'Auth' => array(
             'userScope' => array('is_deleted' => 0)
         ),
-		'Session');
+		'Session',
+    'Email');
 
     public function beforeFilter() {
 

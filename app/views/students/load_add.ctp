@@ -9,6 +9,12 @@
 
             echo $this->Session->flash();
 
+            if (isset($smtp_errors)) {
+
+                echo $smtp_errors;
+
+            }
+
             echo $this->Form->create(false, array("url" => array("controller" => "Students", "action" => "loadAdd")));
 
             echo $this->Form->input("username",array("class"=>"form-control"));

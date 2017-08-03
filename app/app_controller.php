@@ -102,7 +102,7 @@ class AppController extends Controller {
 
     }
 
-    public function _sendNewUserMail($id = null, $data = null, $template = null, $password = null, $key) {
+    public function _sendNewUserMail($id = null, $data = null, $template = null, $password = null, $key = null) {
 
         if (is_null($id) || is_null($data) || is_null($template)) {
 

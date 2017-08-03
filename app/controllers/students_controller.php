@@ -129,7 +129,7 @@ class StudentsController extends AppController {
 
             if ($this->Student->saveField('is_actived', 1)) {
 
-                $this->Session->setFlash('<h1> - - Welcome To Test CakePHP 1.3 - - </h1>', 'flash_success');
+                $this->Session->setFlash('<h1>--- Welcome To Test CakePHP 1.3 ---</h1>', 'flash_success');
 
                 $this->redirect('/Home');
 

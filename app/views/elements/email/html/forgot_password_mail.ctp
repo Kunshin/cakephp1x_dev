@@ -6,6 +6,10 @@
 
 	<h3>Your Password :</h3>
 
-	<p>Password : <?php echo $User['Student']['password'] ?></p>
+	<?php if (isset($password) && count($password) > 0) { ?>
+
+	<p>Password : <?php echo $password ?></p>
+
+	<?php } ?>
 
 <?php } ?>

@@ -4,37 +4,11 @@
 
 	<br />
 
-	<h3>Your Profiles :</h3>
+	<h3>Activate User</h3>
 
-	<p>Username : <?php  echo $User['Student']['username'] ?></p>
+	<?php if (isset($key) && count($key) > 0) { ?>
 
-	<p>Email : <?php  echo $User['Student']['email'] ?></p>
-
-	<p>Information : <?php  echo $User['Student']['info'] ?></p>
-
-	<?php if (isset($UserInput) && count($UserInput) > 0) { ?>
-
-		<p>Password : <?php  echo $UserInput['password'] ?></p>
-
-		<?php 
-
-			if ($UserInput['role'] == 1) {
-
-				$role = 'Admin';
-
-			} else if ($UserInput['role'] == 2) {
-
-				$role = 'Director';
-
-			} else {
-
-				$role = 'User';
-
-			}
-
-			echo  '<p>Role : '.$role.'</p>'
-
-		?>
+		<p>Please click link to active Your User : <?php echo Router::url('/Students/Active', true ).'/'.$key ?></p>
 
 	<?php } ?>
 

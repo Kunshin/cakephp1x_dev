@@ -2,5 +2,6 @@
 <hr>
 <div class=container_15>
     <div class="suffix_5 prefix_5">
+    	<?php echo $this->Session->flash(); ?>
     </div>
 </div>

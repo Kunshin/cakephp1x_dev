@@ -129,3 +129,9 @@ ALTER TABLE `users_groups`
 
 
 ALTER TABLE `users` ADD `is_actived` INT(1) NOT NULL DEFAULT '1' AFTER `password`;
+
+ALTER TABLE `users` ADD `token` VARCHAR(255) NOT NULL AFTER `password`;
+
+ALTER TABLE `users` CHANGE `token` `token` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `users` CHANGE `is_actived` `is_actived` INT(1) NOT NULL DEFAULT '0';

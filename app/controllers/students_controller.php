@@ -7,6 +7,8 @@ class StudentsController extends AppController {
 
         parent::beforeFilter();
 
+        $this->Auth->allow('active');
+
         $this->layout = 'students';
         
         $this->Auth->deny();
@@ -64,17 +66,29 @@ class StudentsController extends AppController {
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
 
-                    $send = $this->_sendNewUserMail($student_id, $this->data, 'simple_message');
+                    $key = Security::hash(String::uuid(),'sha1',true);
 
-                    if ($send) {
+                    $this->Student->id = $student_id;
 
-                        $this->Session->setFlash('Add User Success !');
+                    if ($this->Student->saveField('token', $key)) {
 
-                        $this->redirect('/Students');
+                        $send = $this->_sendNewUserMail($student_id, $this->data, 'simple_message','',$key);
+
+                        if ($send) {
+
+                            $this->Session->setFlash('Add User Success !');
+
+                            $this->redirect('/Students');
+
+                        } else {
+
+                            $this->set('smtp_errors', $this->Email->smtpError);
+
+                        }                        
 
                     } else {
 
-                        $this->set('smtp_errors', $this->Email->smtpError);
+                        $this->Session->setFlash('Key Error !');
 
                     }
 
@@ -97,6 +111,39 @@ class StudentsController extends AppController {
 	    }
 
 	}
+
+    public function active($key = null) {
+
+        if (!is_null($key)) {
+
+            $data = $this->Student->find("first", array(
+
+                'conditions' => array(
+                'Student.token' => $key,
+                'Student.is_deleted' => 0,
+                )
+
+            ));
+
+            $this->Student->id = $data['Student']['id'];
+
+            if ($this->Student->saveField('is_actived', 1)) {
+
+                $this->Session->setFlash('<h1> - - Welcome To Test CakePHP 1.3 - - </h1>', 'flash_success');
+
+                $this->redirect('/Home');
+
+            } else {
+
+                $this->Session->setFlash('Active Error !');
+
+                $this->redirect('/Home');
+
+            }
+
+        }
+
+    }
 
 	public function edit($id = null) {
 

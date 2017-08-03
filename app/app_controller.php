@@ -102,7 +102,7 @@ class AppController extends Controller {
 
     }
 
-    public function _sendNewUserMail($id = null, $data = null, $template = null, $password = null) {
+    public function _sendNewUserMail($id = null, $data = null, $template = null, $password = null, $key) {
 
         if (is_null($id) || is_null($data) || is_null($template)) {
 
@@ -116,13 +116,17 @@ class AppController extends Controller {
 
             }
 
+            if (!is_null($key)) {
+
+                $this->set('key', $key);
+
+            }
+
             $User = $this->Student->read(null,$id);
 
             $UserInput = $data;
 
             $this->Email->to = $User['Student']['email'];
-
-            $this->Email->bcc = array('secret@example.com');
 
             $this->Email->subject = 'Information for New User !';
 

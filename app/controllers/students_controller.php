@@ -125,19 +125,23 @@ class StudentsController extends AppController {
 
             ));
 
-            $this->Student->id = $data['Student']['id'];
+            if (count($data) > 0) {
 
-            if ($this->Student->saveField('is_actived', 1)) {
+                $this->Student->id = $data['Student']['id'];
 
-                $this->Session->setFlash('<h1>--- Welcome To Test CakePHP 1.3 ---</h1>', 'flash_success');
+                if ($this->Student->saveField('is_actived', 1)) {
 
-                $this->redirect('/Home');
+                    $this->Session->setFlash('<h1>--- Welcome To Test CakePHP 1.3 ---</h1>', 'flash_success');
 
-            } else {
+                    $this->redirect('/Home');
 
-                $this->Session->setFlash('Active Error !');
+                } else {
 
-                $this->redirect('/Home');
+                    $this->Session->setFlash('Active Error !');
+
+                    $this->redirect('/Home');
+
+                }
 
             }
 

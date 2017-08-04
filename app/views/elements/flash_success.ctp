@@ -1,3 +1,5 @@
 <div class="success">
-    <?php echo $message ?>
+	<?php if (isset($message)) { ?>
+    	<?php echo $message ?>
+    <?php } ?>
 </div>

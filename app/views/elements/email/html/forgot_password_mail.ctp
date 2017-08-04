@@ -6,7 +6,7 @@
 
 	<h3>Your Password :</h3>
 
-	<?php if (isset($password) && count($password) > 0) { ?>
+	<?php if (isset($password)) { ?>
 
 	<p>Password : <?php echo $password ?></p>
 

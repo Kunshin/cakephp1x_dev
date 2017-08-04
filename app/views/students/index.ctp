@@ -7,12 +7,12 @@
     <br>
     <?php echo $this->Session->flash(); ?>
     <table class="table table-striped table-bordered">
+
         <tr>
-            <th>ID</th>
+            <th><?php echo $this->Paginator->sort('ID', 'id'); ?></th>
             <th>Student Name</th>
             <th>Email</th>
             <th>Info</th>
-            <th>Pasword</th>
             <th>Action</th>
         </tr>
         <?php 
@@ -31,8 +31,6 @@
 
                     echo '<td>'.$item["Student"]["info"].'</td>';
 
-                    echo '<td>'.$item["Student"]["password"].'</td>';
-
                     echo '<td>
                             <a type="button" class="btn btn-info" href="'.Router::url("/Students/edit/".$item["Student"]["id"]."", true).'">Edit</a>
                             <a type="button" class="btn btn-danger confirmDelete" data-toggle="modal" value="'.$item["Student"]["id"].'" data-target="#deleteModal" data-href="'.Router::url("/Students/delete/".$item["Student"]["id"]."", true).'">
@@ -47,7 +45,13 @@
             }
 
         ?>
+
+
     </table>
+
+    <div class="center"><?php echo $this->Paginator->numbers(); ?></div>
+
+    
     
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

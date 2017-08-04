@@ -25,16 +25,25 @@ class StudentsController extends AppController {
     
     }
 
+
+
   	public function index() {
 
-      	$data = $this->Student->find("all", array(
+        $paginate = array(
+            'fields' => array('Student.id'),
+            'order' => array(
+                'Student.id' => 'asc'
+            )
+        );
 
-          	'conditions' => array('is_deleted' => 0),
-            'order' => 'Student.id ASC',
+        $this->paginate = array(
+            'conditions' => array('Student.is_deleted LIKE' => 0),
+            'limit' => 5
+        );
 
-     	));
+        $data = $this->paginate('Student');
 
-      	$this->set("data",$data);
+      	$this->set("data", $data);
 
 	}
 

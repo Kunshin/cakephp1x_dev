@@ -54,7 +54,7 @@ class UsersController extends AppController {
 
 	            ));
 
-	            if ($dataStudent) {
+	            if (is_array($dataStudent) && count($dataStudent) > 0) {
 
 	            	$time = time();
 

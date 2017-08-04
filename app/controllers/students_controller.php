@@ -56,6 +56,10 @@ class StudentsController extends AppController {
 
 	      	if ($this->Student->validates()) {
 
+                $key = Security::hash(String::uuid(),'sha1',true);
+
+                $this->data['token'] = $key;
+
                 if ($this->Student->save($this->data)) {
 
                     $student_id = $this->Student->getLastInsertId();
@@ -66,29 +70,17 @@ class StudentsController extends AppController {
 
                     $this->UsersGroup->save($this->data['UsersGroup']);
 
-                    $key = Security::hash(String::uuid(),'sha1',true);
+                    $send = $this->_sendNewUserMail($student_id, $this->data, 'simple_message', false, $key);
 
-                    $this->Student->id = $student_id;
+                    if ($send) {
 
-                    if ($this->Student->saveField('token', $key)) {
+                        $this->Session->setFlash('Add User Success !');
 
-                        $send = $this->_sendNewUserMail($student_id, $this->data, 'simple_message','',$key);
-
-                        if ($send) {
-
-                            $this->Session->setFlash('Add User Success !');
-
-                            $this->redirect('/Students');
-
-                        } else {
-
-                            $this->set('smtp_errors', $this->Email->smtpError);
-
-                        }                        
+                        $this->redirect('/Students');
 
                     } else {
 
-                        $this->Session->setFlash('Key Error !');
+                        $this->set('smtp_errors', $this->Email->smtpError);
 
                     }
 
@@ -125,23 +117,39 @@ class StudentsController extends AppController {
 
             ));
 
-            if (count($data) > 0) {
+            if (is_array($data) && count($data) > 0) {
 
-                $this->Student->id = $data['Student']['id'];
+                if ($data['Student']['is_actived'] == 1) {
 
-                if ($this->Student->saveField('is_actived', 1)) {
-
-                    $this->Session->setFlash('<h1>--- Welcome To Test CakePHP 1.3 ---</h1>', 'flash_success');
+                    $this->Session->setFlash('<h1>User Activated</h1>', 'flash_success');
 
                     $this->redirect('/Home');
 
                 } else {
 
-                    $this->Session->setFlash('Active Error !');
+                    $this->Student->id = $data['Student']['id'];
 
-                    $this->redirect('/Home');
+                    if ($this->Student->saveField('is_actived', 1)) {
+
+                        $this->Session->setFlash('<h1>Welcome To Test CakePHP 1.3</h1>', 'flash_success');
+
+                        $this->redirect('/Home');
+
+                    } else {
+
+                        $this->Session->setFlash('<h1>Active Error</h1>', 'flash_error');
+
+                        $this->redirect('/Home');
+
+                    }
 
                 }
+
+            } else {
+
+                $this->Session->setFlash('<h1>Key Active Not Exist</h1>' , 'flash_error');
+
+                $this->redirect('/Home');
 
             }
 
@@ -178,7 +186,7 @@ class StudentsController extends AppController {
 
             ));
 
-            if (count($data) > 0) {
+            if (is_array($data) && count($data) > 0) {
 
                 $this->set("data", $data['Student']);
 
@@ -251,7 +259,7 @@ class StudentsController extends AppController {
 
                 ));
 
-                if (count($data) > 0) {
+                if (is_array($data) && count($data) > 0) {
 
                     $this->Student->id = $data['Student']['id'];
 

@@ -13,6 +13,7 @@
             <th>Student Name</th>
             <th>Email</th>
             <th>Info</th>
+            <th>Active</th>
             <th>Action</th>
         </tr>
         <?php 
@@ -31,6 +32,16 @@
 
                     echo '<td>'.$item["Student"]["info"].'</td>';
 
+                    if ($item["Student"]["is_actived"] == 1) {
+
+                        echo '<td>Active</td>';
+
+                    } else {
+
+                        echo '<td>Deactive</td>';
+
+                    }
+                    
                     echo '<td>
                             <a type="button" class="btn btn-info" href="'.Router::url("/Students/edit/".$item["Student"]["id"]."", true).'">Edit</a>
                             <a type="button" class="btn btn-danger confirmDelete" data-toggle="modal" value="'.$item["Student"]["id"].'" data-target="#deleteModal" data-href="'.Router::url("/Students/delete/".$item["Student"]["id"]."", true).'">
